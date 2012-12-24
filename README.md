@@ -1,2 +1,2 @@
 Proset
-HTML5 and Javascript. Baller baller
+HTML5 and Javascript. 
