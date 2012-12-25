@@ -1,45 +1,21 @@
-function init(){
-  cvas = document.getElementById('canvas');
-  cvas.width = cvas.height = 600;
-  ctx = cvas.getContext('2d');
-  d = new Deck();
-  view = new Array(7),
-    set = new Array(7);
-  for(var i=0;i<7;i+=1){
-    view[i] = d.draw()+1;
-    set[i] = false;
-  }
-  cardw = 100;
-  cardh = 150;
-  dims = [];
-  dims[0] = {'x': cvas.width/2-cardw/2-100, 'y': cvas.height/2-cardh/2-200};
-  dims[1] = {'x': cvas.width/2-cardw/2+100, 'y': cvas.height/2-cardh/2-200};
-  dims[2] = {'x': cvas.width/2-cardw/2-200, 'y': cvas.height/2-cardh/2};
-  dims[3] = {'x': cvas.width/2-cardw/2, 'y': cvas.height/2-cardh/2};
-  dims[4] = {'x': cvas.width/2-cardw/2+200, 'y': cvas.height/2-cardh/2};
-  dims[5] = {'x': cvas.width/2-cardw/2-100, 'y': cvas.height/2-cardh/2+200};
-  dims[6] = {'x': cvas.width/2-cardw/2+100, 'y': cvas.height/2-cardh/2+200};
-  draw();
-  //drawgrid(50);
+VisCard = function(canv){
+  this.cvas = canv;
+  this.ch = canv.height;
+  this.cw = canv.width;
+  this.ctx = canv.getContext('2d');
+  this.map = {};
+  this.map[1] = {'x': 0, 'y': 0, 'color': "#cc0000"};
+  this.map[2] = {'x': cw/2, 'y': 0, 'color': "#f57900"};
+  this.map[4] = {'x': 0, 'y': ch/3, 'color': "#edd400"};
+  this.map[8] = {'x': cw/2, 'y': ch/3, 'color': "#73d216"};
+  this.map[16] = {'x': 0, 'y': 2*ch/3, 'color': "#3465a4"};
+  this.map[32] = {'x': cw/2, 'y': 2*ch/3, 'color': "#75507b"};
+  
 }
 
-function draw(){
-  ctx.clearRect(0, 0, cvas.width, cvas.height);
-  for(var i=0;i<7;i++){
-    drawcard(dims[i]['x'], dims[i]['y'], view[i]);
-  }
-}
-
-function drawcard(x, y, num){
-  var map = {};
-  map[1] = {'x': x, 'y': y, 'color': "#cc0000"};
-  map[2] = {'x': x+cardw/2, 'y': y, 'color': "#f57900"};
-  map[4] = {'x': x, 'y': y+cardh/3, 'color': "#edd400"};
-  map[8] = {'x': x+cardw/2, 'y': y+cardh/3, 'color': "#73d216"};
-  map[16] = {'x': x, 'y': y+2*cardh/3, 'color': "#3465a4"};
-  map[32] = {'x': x+cardw/2, 'y': y+2*cardh/3, 'color': "#75507b"};
-  ctx.strokeStyle = "black";
-  ctx.strokeRect(x, y, cardw, cardh);
+VisCard.prototype.draw = function(num){
+  this.ctx.strokeStyle = "black";
+  this.ctx.strokeRect(0, 0, this.cw, this.ch);
   for(i=1;i<64;i<<=1){
     if((num & i)!==0){
       drawcolor(map[i]['x'], map[i]['y'], map[i]['color']); 
@@ -47,7 +23,7 @@ function drawcard(x, y, num){
   }
 }
 
-function drawcolor(x, y, color){
+VisCard.prototype.drawcolor = function(x, y, color){
   ctx.fillStyle = color;
   ctx.fillRect(x, y, cardw/2, cardh/3);
 }
@@ -65,26 +41,20 @@ function drawgrid(gap){
 }
 
 window.onmousedown = function(e) {
-  var xin = e.clientX;
-  var yin = e.clientY;
-  for(var i=0;i<7;i++){
-    if(xin>dims[i]['x']&&xin<dims[i]['x']+cardw&&yin>dims[i]['y']+50&&yin<dims[i]['y']+cardh+50){
-      set[i] = !set[i];
-    }
-  }
+  var tar = e.target;
+  console.log('clicked on '+tar);
 }
 
 $("#submit").click(function(){
   var res = 0;
+  var has = false;
   for(var i=0;i<7;i++){
-    if(set[i]) { res = res ^ view[i]; }
+    if(set[i]) { has = true; res = res ^ view[i]; }
   }
-  if(res==0){
+  if(has&&res===0){
     alert("You win!");
   }
   else{
     alert("Sorry, you still have "+res+" left");
   }
 });
-
-init();

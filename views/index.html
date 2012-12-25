@@ -2,7 +2,7 @@
 <html>
   <head>
   	<title>ProSet</title>
-
+	<meta name="viewport" content="width=device-width, initial scale=1.0">
   	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -13,10 +13,15 @@
   </head>
   <body>
     <h2>Welcome to ProSet!</h2>
-  	<canvas id="canvas" width="600" height="600">
-      Sorry, you either have javascript disabled or are using an outdated browser.
-      Site tested and confirmed working with latest Mozilla Firefox and Google Chrome. 
-    </canvas>
+
+    <canvas id="card0"></canvas>
+    <canvas id="card1"></canvas>
+    <canvas id="card2"></canvas>
+    <canvas id="card3"></canvas>
+    <canvas id="card4"></canvas>
+    <canvas id="card5"></canvas>
+    <canvas id="card6"></canvas>
+
     <div id="toolbar">
       <button id="submit">Submit</button>
       <button>New Game</button>
@@ -25,5 +30,6 @@
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
     <script src="js/deck.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
   </body>
 </html>
