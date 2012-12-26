@@ -15,5 +15,5 @@ Deck = function(){
 }
 
 Deck.prototype.draw = function(){
-  return this.deck.shift();
+  return this.deck.shift()+1;
 }
