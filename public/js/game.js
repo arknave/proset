@@ -13,7 +13,11 @@ g = new Game();
 
 window.onmousedown = function(e){
   var card = parseInt(e.target.id.charAt(4)); 
-  if(!isNaN(card)){ console.log(card); g.set[card] = !g.set[card]; }
+  if(!isNaN(card)){ 
+    $("#card"+card).toggleClass('select');
+    console.log(card); 
+    g.set[card] = !g.set[card]; 
+  }
 }
 
 

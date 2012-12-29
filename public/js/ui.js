@@ -52,3 +52,7 @@ $("#submit").click(function(){
     alert("Sorry, you still have "+res+" left");
   }
 });
+
+$('#newgame').click(function(){
+  window.location.reload();
+});
