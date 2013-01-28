@@ -1,58 +1,55 @@
-VisCard = function(canv){
-  this.cvas = canv;
-  this.ch = canv.height;
-  this.cw = canv.width;
-  this.ctx = canv.getContext('2d');
-  this.map = {};
-  this.map[1] = {'x': 0, 'y': 0, 'color': "#cc0000"};
-  this.map[2] = {'x': this.cw/2, 'y': 0, 'color': "#f57900"};
-  this.map[4] = {'x': 0, 'y': this.ch/3, 'color': "#edd400"};
-  this.map[8] = {'x': this.cw/2, 'y': this.ch/3, 'color': "#73d216"};
-  this.map[16] = {'x': 0, 'y': 2*this.ch/3, 'color': "#3465a4"};
-  this.map[32] = {'x': this.cw/2, 'y': 2*this.ch/3, 'color': "#75507b"};
-}
+$('#cards').click(function(e){
+  if(e.target.id === 'cards'){
+    return;
+  }
+  var cnum = parseInt(e.target.id.charAt(4));
+  if(isNaN(cnum)){
+    return;
+  }
+  $('#card'+cnum).toggleClass('select');
+  g.set[cnum] = !g.set[cnum];
+});
 
-VisCard.prototype.draw = function(num){
-  this.ctx.strokeStyle = "black";
-  this.ctx.strokeRect(0, 0, this.cw, this.ch);
-  for(var i=1;i<64;i<<=1){
-    if((num & i)!==0){
-      this.drawcolor(this.map[i]['x'], this.map[i]['y'], this.map[i]['color']); 
+$('#submit').click(function(){
+  var res = g.solve(g.set);
+  solved = res[0] && res[1] === 0;
+  if(solved){
+    if(confirm('That works! Draw Again?')){
+      g.redraw();
+      $('.card').removeClass('select');
+    }
+    else {
+      $('#newgame').click();
     }
   }
-}
-
-VisCard.prototype.drawcolor = function(x, y, color){
-  this.ctx.fillStyle = color;
-  this.ctx.fillRect(x, y, this.cw/2, this.ch/3);
-}
-
-function drawgrid(gap){
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  for(i=0;i<cvas.width;i+=gap){
-    ctx.moveTo(0, i);
-    ctx.lineTo(cvas.width, i);
-    ctx.moveTo(i, 0);
-    ctx.lineTo(i, cvas.height);
-  }
-  ctx.stroke();
-}
-
-$("#submit").click(function(){
-  var res = 0;
-  var has = false;
-  for(var i=0;i<7;i++){
-    if(g.set[i]) { has = true; res = res ^ g.view[i]['num']; }
-  }
-  if(has&&res===0){
-    alert("You win!");
-  }
   else{
-    alert("Sorry, you still have "+res+" left");
+    alert('Sorry, you have '+res[1]+' left');
   }
 });
 
 $('#newgame').click(function(){
   window.location.reload();
+});
+
+$('#solve').click(function(){
+  var st = Date.now(),
+    ray = [];
+  for(var i = 1; i<128; i++){
+    var ray = g.bin2ray(i);
+      res = g.solve(ray);
+    if(res[0] && res[1] === 0){
+      $('#ans').text(ray+' solved in '+(Date.now() - st)+'ms');
+      break;
+    }
+  }
+  for(var i = 0; i<7;i++){
+    if(ray[i] === 1){
+      $('#card'+i).addClass('select');
+      g.set[i] = true;
+    }
+    else {
+      $('#card'+i).removeClass('select');
+      g.set[i] = false;
+    }
+  }  
 });

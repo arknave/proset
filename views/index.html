@@ -13,18 +13,28 @@
   </head>
   <body>
     <h2>Welcome to ProSet!</h2>
-    <canvas id="card0" class="card span3"></canvas>
-    <canvas id="card1" class="card span3"></canvas>
-    <canvas id="card2" class="card span3"></canvas>
-    <canvas id="card3" class="card span3"></canvas>
-    <canvas id="card4" class="card span3"></canvas>
-    <canvas id="card5" class="card span3"></canvas>
-    <canvas id="card6" class="card span3"></canvas>
-    <button id="submit" class="btn">Submit</button>
-    <button id="newgame" class="btn">New Game</button>
+    <div id="cards">
+      <canvas id="card0" class="card"></canvas>
+      <canvas id="card1" class="card"></canvas>
+      <canvas id="card2" class="card"></canvas>
+      <canvas id="card3" class="card"></canvas>
+      <canvas id="card4" class="card"></canvas>
+      <canvas id="card5" class="card"></canvas>
+      <canvas id="card6" class="card"></canvas>
+    </div>
+    <div id="toolbar">
+      <button id="submit">Submit</button>
+      <button id="newgame">New Game</button>
+      <button id="solve">Solve</button>
+    </div>
+    <br />
+    <div id="ans"></div>
+    <br />
+    <a href = "/test" >Unit Tests</a>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="js/deck.js"></script>
-    <script src="js/ui.js"></script>
+    <script src="js/card.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
   </body>
 </html>
