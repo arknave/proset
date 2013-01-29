@@ -38,7 +38,7 @@ $('#solve').click(function(){
     var ray = g.bin2ray(i);
       res = g.solve(ray);
     if(res[0] && res[1] === 0){
-      $('#ans').text(ray+' solved in '+(Date.now() - st)+'ms');
+      $('#ans').text('Solved in '+(Date.now() - st)+'ms. UMadBro?');
       break;
     }
   }
